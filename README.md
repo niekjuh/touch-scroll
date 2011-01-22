@@ -7,6 +7,10 @@ Touch-scroll is a jQuery plugin that provides a way to have inline scrollable co
 - This plugin will only work for vertical-scrolling content. It has been designed this way to be lightweight and efficient for this purpose only.
 - The code is based on [iScroll](https://github.com/cubiq/iscroll), but is a simpler (and more accurate) plugin for jQuery.
 
+## Example
+
+Using your iOS device, view an example of touch-scroll in action at: [neave.github.com/touch-scroll](http://neave.github.com/touch-scroll/)
+
 
 ## How to use
 
