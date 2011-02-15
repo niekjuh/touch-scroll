@@ -24,7 +24,11 @@ Using your iOS device, view an example of touch-scroll in action at: [neave.gith
 
 `$('myElement').touchScroll({elastic: false, momentum: false}); // Turn off both elastic-bounce and momentum`
 
+`$('myElement').touchScroll('update'); // Refresh the touch-scroll area if content height has changed`
+
 `$('myElement').touchScroll('setPosition', 100); // Method to set the content vertical scroll position at any time`
+
+`var scrollY = $('myElement').touchScroll('getPosition'); // Returns the current vertical scroll position in pixels`
 
 
 ## License
