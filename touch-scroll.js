@@ -38,6 +38,14 @@
 					hasMatrix = 'WebKitCSSMatrix' in window,
 					has3d = hasMatrix && 'm11' in new WebKitCSSMatrix();
 				
+				// Keep bottom of scroll area at the bottom on resize
+				var update = this.update = function() {
+					height = $this.height();
+					maxHeight = height - scrollHeight;
+					clearTimeout(timeoutID);
+					clampScroll(false);
+				};
+				
 				// Set up initial variables
 				update();
 				
@@ -67,14 +75,6 @@
 					return 'translate' + (has3d ? '3d(0px, ' : '(0px, ') + y + 'px' + (has3d ? ', 0px)' : ')');
 				}
 				
-				// Keep bottom of scroll area at the bottom on resize
-				function update() {
-					height = $this.height();
-					maxHeight = height - scrollHeight;
-					clearTimeout(timeoutID);
-					clampScroll(false);
-				}
-
 				// Set CSS transition time
 				function setTransitionTime(time) {
 					time = time || '0';
@@ -82,13 +82,17 @@
 				}
 
 				// Get the actual pixel position made by transform CSS
-				function getComputedScrollY() {
+				function getPosition() {
 					if (hasMatrix) {
 						var matrix = new WebKitCSSMatrix(window.getComputedStyle($this[0]).webkitTransform);
 						return matrix.f;
 					}
 					return scrollY;
 				}
+				
+				this.getPosition = function() {
+					return getPosition();
+				};
 
 				// Bounce back to the bounds after momentum scrolling
 				function reboundScroll() {
@@ -116,7 +120,7 @@
 					}
 
 					var oldY = pollY;
-					pollY = getComputedScrollY();
+					pollY = getPosition();
 					
 					if (pollY > 0) {
 						if (o.elastic) {
@@ -212,7 +216,7 @@
 					
 					// Check scroll position
 					if (o.momentum) {
-						var y = getComputedScrollY();
+						var y = getPosition();
 						if (y !== scrollY) {
 							setPosition(y);
 							moved = true;
@@ -286,10 +290,23 @@
 			});
 		},
 		
-		// Public method for setPosition
+		update: function() {
+			return this.each(function() {
+				this.update();
+			});
+		},
+		
+		getPosition: function() {
+			var a = [];
+			this.each(function() {
+				a.push(-this.getPosition());
+			});
+			return a;
+		},
+		
 		setPosition: function(y) {
 			return this.each(function() {
-				this.setPosition(-y);				
+				this.setPosition(-y);
 			});
 		}
 		
