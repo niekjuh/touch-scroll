@@ -41,6 +41,7 @@
 				// Keep bottom of scroll area at the bottom on resize
 				var update = this.update = function() {
 					height = $this.height();
+					scrollHeight = $this.attr('scrollHeight');
 					maxHeight = height - scrollHeight;
 					clearTimeout(timeoutID);
 					clampScroll(false);
