@@ -3,6 +3,7 @@
 	// Define default scroll settings
 	var defaults = {
 		y: 0,
+		scrollHeight: 0,
 		elastic: true,
 		momentum: true,
 		elasticDamp: 0.6,
@@ -29,7 +30,7 @@
 					pollY = 0,
 					height = 0,
 					maxHeight = 0,
-					scrollHeight = $this.attr('scrollHeight'),
+					scrollHeight = 0,
 					scrolling = false,
 					bouncing = false,
 					moved = false,
@@ -41,7 +42,10 @@
 				// Keep bottom of scroll area at the bottom on resize
 				var update = this.update = function() {
 					height = $this.height();
-					scrollHeight = $this.attr('scrollHeight');
+					scrollHeight = o.scrollHeight || $this.attr('scrollHeight');
+					if (scrollHeight < height) {
+						scrollHeight = height;
+					}
 					maxHeight = height - scrollHeight;
 					clearTimeout(timeoutID);
 					clampScroll(false);

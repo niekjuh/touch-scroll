@@ -18,13 +18,15 @@ Using your iOS device, view an example of touch-scroll in action at: [neave.gith
 
 `$('myElement').touchScroll({y: 100}); // Change the initial vertical scroll position to 100 pixels down`
 
+`$('myElement').touchScroll({scrollHeight: 1000}); // Manually set the height of the scrollable area - useful for dynamically sized pages`
+
 `$('myElement').touchScroll({elastic: false}); // Turn off the elastic-bounce at the end of a scroll movement`
 
 `$('myElement').touchScroll({momentum: false}); // Turn off the momentum when a finger is lifted from the screen`
 
 `$('myElement').touchScroll({elastic: false, momentum: false}); // Turn off both elastic-bounce and momentum`
 
-`$('myElement').touchScroll('update'); // Refresh the touch-scroll area if content height has changed`
+`$('myElement').touchScroll('update'); // Refresh the touch-scroll area if content has changed`
 
 `$('myElement').touchScroll('setPosition', 100); // Method to set the content vertical scroll position at any time`
 
