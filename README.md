@@ -14,23 +14,23 @@ Using your iOS device, view an example of touch-scroll in action at: [neave.gith
 
 ## How to use
 
-`$('myElement').touchScroll(); // Creates touch-scrollable content from any element, or set of elements`
+`$('nav').touchScroll(); // Creates touch-scrollable content for a 'nav' element`
 
-`$('myElement').touchScroll({y: 100}); // Change the initial vertical scroll position to 100 pixels down`
+`$('nav').touchScroll({y: 100}); // Change the initial vertical scroll position to 100 pixels down`
 
-`$('myElement').touchScroll({scrollHeight: 1000}); // Manually set the height of the scrollable area - useful for dynamically sized pages`
+`$('nav').touchScroll({scrollHeight: 1000}); // Manually set the height of the scrollable area - useful for dynamically sized pages`
 
-`$('myElement').touchScroll({elastic: false}); // Turn off the elastic-bounce at the end of a scroll movement`
+`$('nav').touchScroll({elastic: false}); // Turn off the elastic-bounce at the end of a scroll movement`
 
-`$('myElement').touchScroll({momentum: false}); // Turn off the momentum when a finger is lifted from the screen`
+`$('nav').touchScroll({momentum: false}); // Turn off the momentum when a finger is lifted from the screen`
 
-`$('myElement').touchScroll({elastic: false, momentum: false}); // Turn off both elastic-bounce and momentum`
+`$('nav').touchScroll({elastic: false, momentum: false}); // Turn off both elastic-bounce and momentum`
 
-`$('myElement').touchScroll('update'); // Refresh the touch-scroll area if content has changed`
+`$('nav').touchScroll('update'); // Refresh the touch-scroll area if content has changed`
 
-`$('myElement').touchScroll('setPosition', 100); // Method to set the content vertical scroll position at any time`
+`$('nav').touchScroll('setPosition', 100); // Method to set the content vertical scroll position at any time`
 
-`var scrollY = $('myElement').touchScroll('getPosition'); // Returns the current vertical scroll position in pixels`
+`var scrollY = $('nav').touchScroll('getPosition'); // Returns the current vertical scroll position in pixels`
 
 
 ## License
