@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Touch Scroll jQuery plugin demo</title>
+		<title>touchScroll jQuery plugin simple example</title>
 		<style>
 			body {
 				overflow-y: hidden;
@@ -23,7 +23,7 @@
 			
 			section {
 				display: block;
-				position: fixed;
+				position: absolute;
 				left: 10%;
 				top: 10%;
 				bottom: 10%;
@@ -51,8 +51,8 @@
 				<p>The end.</p>
 			</nav>
 		</section>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-		<script src="touch-scroll.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+		<script src="touch-scroll.min.js"></script>
 		<script>
 			$(document).ready(function() {
 				$('nav').touchScroll();
