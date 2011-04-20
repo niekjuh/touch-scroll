@@ -9,8 +9,11 @@ Touch-scroll is a jQuery plugin that provides a way to have inline scrollable co
 
 ## Example
 
-Using your iOS device, view an example of touch-scroll in action at: [neave.github.com/touch-scroll](http://neave.github.com/touch-scroll/)
+Using your iOS device (iPhone, iPod touch or iPad), view an example of touch-scroll in action at: [neave.github.com/touch-scroll/example.html](http://neave.github.com/touch-scroll/example.html)
 
+For an example of a page with a fixed footer, view this page on your iOS device: [neave.github.com/touch-scroll/footer.html](http://neave.github.com/touch-scroll/footer.html)
+
+Make sure your code uses the same base CSS as provided in these examples.
 
 ## How to use
 
