@@ -1,15 +1,15 @@
-# touch-scroll jQuery plugin
+# touchScroll jQuery plugin
 
 ## About
 
-Touch-scroll is a jQuery plugin that provides a way to have inline scrollable content. It mimics the behaviour of scrolling on iOS devices (iPhone, iPod touch and iPad) to solve the problem that `position: fixed;` does not work in mobile Safari.
+touchScroll is a jQuery plugin that provides a way to have inline scrollable content. It mimics the behaviour of scrolling on iOS devices (iPhone, iPod touch and iPad) to solve the problem that `position: fixed;` does not work in mobile Safari.
 
 - This plugin will only work for vertical-scrolling content. It has been designed with only this in mind to keep the library lightweight and efficient.
 - The code is based on [iScroll](https://github.com/cubiq/iscroll), but is a simpler (and more accurate) plugin for jQuery.
 
 ## Example
 
-Using your iOS device (iPhone, iPod touch or iPad), view an example of touch-scroll in action at: [neave.github.com/touch-scroll/example.html](http://neave.github.com/touch-scroll/example.html)
+Using your iOS device (iPhone, iPod touch or iPad), view an example of touchScroll in action at: [neave.github.com/touch-scroll/example.html](http://neave.github.com/touch-scroll/example.html)
 
 For an example of a page with a fixed footer, view this page on your iOS device: [neave.github.com/touch-scroll/footer.html](http://neave.github.com/touch-scroll/footer.html)
 
