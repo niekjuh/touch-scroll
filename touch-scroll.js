@@ -89,8 +89,11 @@
 				// Get the actual pixel position made by transform CSS
 				function getPosition() {
 					if (hasMatrix) {
-						var matrix = new WebKitCSSMatrix(window.getComputedStyle($this[0]).webkitTransform);
-						return matrix.f;
+						var transform = window.getComputedStyle($this[0]).webkitTransform;
+						if (!!transform && transform !== 'none') {
+							var matrix = new WebKitCSSMatrix(transform);
+							return matrix.f;
+						}
 					}
 					return scrollY;
 				}
