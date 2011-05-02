@@ -210,6 +210,10 @@
 				
 				// Perform a touch start event
 				function touchStart(e) {
+					if (e.target.tagName === "SELECT") {
+						return;
+					}
+					
 					e.preventDefault();
 					e.stopPropagation();
 					
