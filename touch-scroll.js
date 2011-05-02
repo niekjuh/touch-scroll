@@ -4,7 +4,7 @@
 	var defaults = {
 		y: 0,
 		scrollHeight: 0,
-		elastic: true,
+		elastic: !navigator.userAgent.match(/android/i),
 		momentum: true,
 		elasticDamp: 0.6,
 		elasticTime: 50,
@@ -21,6 +21,11 @@
 		init: function(options) {
 			return this.each(function() {
 				
+				// Prevent double-init, just update instead
+				if ($(this).data('touchscroll')) {
+					return this.update();
+				}
+				
 				// Define element variables
 				var $this = $(this),
 					o = $.extend(defaults, options),
@@ -35,9 +40,11 @@
 					bouncing = false,
 					moved = false,
 					timeoutID,
-					isiPad = navigator.platform.indexOf('iPad') !== -1,
+					isiPad = !!navigator.platform.match(/ipad/i),
 					hasMatrix = 'WebKitCSSMatrix' in window,
 					has3d = hasMatrix && 'm11' in new WebKitCSSMatrix();
+				
+				$this.data('touchscroll', true);
 				
 				// Keep bottom of scroll area at the bottom on resize
 				var update = this.update = function() {
@@ -56,7 +63,7 @@
 				
 				// Set up transform CSS
 				$this.css({'-webkit-transition-property': '-webkit-transform',
-					'-webkit-transition-timing-function': 'cubic-bezier(0, 0, 0.2, 1)',
+					'-webkit-transition-timing-function': 'cubic-bezier(0,0,0.2,1)',
 					'-webkit-transition-duration': '0',
 					'-webkit-transform': cssTranslate(scrollY)});
 				
@@ -77,7 +84,7 @@
 				
 				// Transform using a 3D translate if available
 				function cssTranslate(y) {
-					return 'translate' + (has3d ? '3d(0px, ' : '(0px, ') + y + 'px' + (has3d ? ', 0px)' : ')');
+					return 'translate' + (has3d ? '3d(0,' : '(0,') + y + 'px' + (has3d ? ',0)' : ')');
 				}
 				
 				// Set CSS transition time
@@ -210,7 +217,7 @@
 				
 				// Perform a touch start event
 				function touchStart(e) {
-					if (e.target.tagName === "SELECT") {
+					if (e.target.tagName === 'SELECT') {
 						return;
 					}
 					
@@ -267,6 +274,13 @@
 					setPosition(dy);
 				}
 				
+				// Dispatches a fake mouse event from a touch event
+				function dispatchMouseEvent(name, touch, target) {
+					var e = document.createEvent('MouseEvent');
+					e.initMouseEvent(name, true, true, touch.view, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
+					target.dispatchEvent(e);
+				}
+				
 				// Perform a touch end event
 				function touchEnd(e) {
 					if (!scrolling) {
@@ -286,16 +300,17 @@
 							momentumScroll(movedY, isiPad ? o.iPadMomentumDamp : o.momentumDamp, 40, 2000, isiPad ? o.iPadMomentumTime : o.momentumTime);
 						}			
 					} else {
-						// Dispatch a fake click event if this touch event did not move
+						// Dispatch a set of fake mouse events if this touch event did not move
 						var touch = touches[0],
-							target = touch.target,
-							me = document.createEvent('MouseEvent');
-
+							target = touch.target;
+						
 						while (target.nodeType !== 1) {
 							target = target.parentNode;
 						}
-						me.initMouseEvent('click', true, true, touch.view, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
-						target.dispatchEvent(me);
+						
+						dispatchMouseEvent('mousedown', touch, target);
+						dispatchMouseEvent('mouseup', touch, target);
+						dispatchMouseEvent('click', touch, target);
 					}
 				}
 			
