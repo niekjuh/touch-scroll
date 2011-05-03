@@ -195,21 +195,22 @@
 						if (d < 0) {
 							dy = -dy;
 						}
-					}
-					dy = Math.round(dy) + scrollY;
-					
-					// If outside the bounds, don't go too far
-					if (height > 0) {
-						if (dy > height * 2) {
-							var ody = dy;
-							dy = height * 2;
-						} else if (dy < maxHeight - height * 2) {
-							dy = maxHeight - height * 2;
+						
+						dy += scrollY;
+						
+						// If outside the bounds, don't go too far
+						if (height > 0) {
+							if (dy > height * 2) {
+								var ody = dy;
+								dy = height * 2;
+							} else if (dy < maxHeight - height * 2) {
+								dy = maxHeight - height * 2;
+							}
 						}
-					}
 					
-					// Perform scroll
-					scrollTo(dy, t);
+						// Perform scroll
+						scrollTo(Math.round(dy), t);
+					}
 					
 					clampScroll(true);
 				}
