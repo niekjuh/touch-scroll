@@ -10,14 +10,14 @@
 			}
 			
 			p {
-				font: 16px Georgia;
+				font: 18px Georgia;
 				color: #444;
 				margin: 0;
 				padding: 20px;
 			}
 			
 			code {
-				font: 16px monospace;
+				font: 18px monospace;
 				color: #444;
 				margin: 0;
 			}
@@ -78,6 +78,10 @@
 				<p>This code is a jQuery plugin that provides a way to have inline scrollable content. It mimics the behaviour of the scrolling on iOS devices (iPhone, iPod touch and iPad) to solve the problem that <code>position: fixed;</code> does not work in mobile Safari.</p>
 				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
 				<p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum. Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima et quinta decima. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+				<p>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.</p>
+				<p>Cras auctor eros vitae elit lobortis fringilla. Etiam feugiat fermentum ligula, id adipiscing diam porttitor ut. Cras sodales dolor nec nunc rutrum id consequat velit feugiat. Nullam ante felis, tempus non varius vitae, posuere sed lacus. In dui nulla, egestas et vestibulum id, vehicula id nulla. Curabitur sed tristique dolor. Curabitur ut tortor a arcu molestie cursus.</p>
+				<p>Aliquam in lacus arcu, ut aliquam nulla. Suspendisse in ipsum dolor. Duis semper dapibus nisi ut auctor. Suspendisse et massa felis. Quisque gravida, lacus ut fermentum adipiscing, ligula arcu porta risus, ac volutpat nibh purus sit amet ipsum. In hac habitasse platea dictumst. Maecenas eget congue nunc. Phasellus quis mi velit. Pellentesque sit amet orci velit. Vivamus sed nulla lacus.</p>
+				<p>Aenean in purus aliquam quam pellentesque venenatis sed fermentum nisl. Praesent eget leo lorem, et laoreet quam. Donec volutpat quam mauris, nec vestibulum felis. Donec ac sem mi, a malesuada elit. Suspendisse sit amet quam ligula, a laoreet diam. Nulla cursus, tellus mattis molestie ultrices, augue nisi aliquam tellus, sed luctus mauris magna eu sem. Cras at erat elit, at placerat sapien. Suspendisse vestibulum dapibus vestibulum. Praesent semper, tellus sed mattis ullamcorper, nisl mi viverra urna, eget euismod ante nisl vel nisi. Nulla quis enim arcu. Maecenas vel quam turpis. Donec convallis ultricies elit, eget cursus magna auctor non. Etiam ut lacus at orci molestie condimentum. Sed ac leo nisl, ut pretium eros.</p>
 				<p>The end.</p>
 			</nav>
 		</section>
@@ -93,7 +97,9 @@
 		<script src="touch-scroll.min.js"></script>
 		<script>
 			$(document).ready(function() {
-				$('nav').touchScroll();
+				if (!!('ontouchstart' in window)) {
+					$('nav').touchScroll();
+				}
 			});
 		</script>
 	</body>

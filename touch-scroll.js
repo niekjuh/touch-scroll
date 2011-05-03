@@ -22,9 +22,10 @@
 			return this.each(function() {
 				
 				// Prevent double-init, just update instead
-				if ($(this).data('touchscroll')) {
+				if (!!this._init) {
 					return this.update();
 				}
+				this._init = true;
 				
 				// Define element variables
 				var $this = $(this),
@@ -43,8 +44,6 @@
 					isiPad = !!navigator.platform.match(/ipad/i),
 					hasMatrix = 'WebKitCSSMatrix' in window,
 					has3d = hasMatrix && 'm11' in new WebKitCSSMatrix();
-				
-				$this.data('touchscroll', true);
 				
 				// Keep bottom of scroll area at the bottom on resize
 				var update = this.update = function() {
@@ -105,6 +104,7 @@
 					return scrollY;
 				}
 				
+				// Expose getPosition API
 				this.getPosition = function() {
 					return getPosition();
 				};
@@ -170,7 +170,7 @@
 					if (destY === scrollY) {
 						return;
 					}
-
+					
 					moved = true;
 					setTransitionTime(time);
 					setPosition(destY);
@@ -195,10 +195,21 @@
 						if (d < 0) {
 							dy = -dy;
 						}
-						
-						// Perform scroll
-						scrollTo(scrollY + Math.round(dy), t);
 					}
+					dy = Math.round(dy) + scrollY;
+					
+					// If outside the bounds, don't go too far
+					if (height > 0) {
+						if (dy > height * 2) {
+							var ody = dy;
+							dy = height * 2;
+						} else if (dy < maxHeight - height * 2) {
+							dy = maxHeight - height * 2;
+						}
+					}
+					
+					// Perform scroll
+					scrollTo(dy, t);
 					
 					clampScroll(true);
 				}
@@ -215,16 +226,36 @@
 					return e.touches;
 				}
 				
+				// Dispatches a fake mouse event from a touch event
+				function dispatchMouseEvent(name, touch, target) {
+					var e = document.createEvent('MouseEvent');
+					e.initMouseEvent(name, true, true, touch.view, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
+					target.dispatchEvent(e);
+				}
+				
+				// Find the root node of this target
+				function getRootNode(target) {
+					while (target.nodeType !== 1) {
+						target = target.parentNode;
+					}
+					return target;
+				}
+				
 				// Perform a touch start event
 				function touchStart(e) {
+					// Don't prevent SELECT elements from receiving touch events
 					if (e.target.tagName === 'SELECT') {
 						return;
 					}
 					
+					// Stop the default touches
 					e.preventDefault();
 					e.stopPropagation();
 					
-					var touches = getTouches(e);
+					var touch = getTouches(e)[0];
+					
+					// Dispatch a fake mouse down event		
+					dispatchMouseEvent('mousedown', touch, getRootNode(touch.target));
 					
 					scrolling = true;
 					moved = false;
@@ -242,7 +273,7 @@
 						}
 					}
 
-					touchY = touches[0].pageY - scrollY;
+					touchY = touch.pageY - scrollY;
 				}
 				
 				// Perform a touch move event
@@ -251,8 +282,7 @@
 						return;
 					}
 					
-					var touches = getTouches(e),
-						dy = touches[0].pageY - touchY;
+					var dy = getTouches(e)[0].pageY - touchY;
 					
 					// Elastic-drag or stop when moving outside of boundaries
 					if (dy > 0) {
@@ -274,13 +304,6 @@
 					setPosition(dy);
 				}
 				
-				// Dispatches a fake mouse event from a touch event
-				function dispatchMouseEvent(name, touch, target) {
-					var e = document.createEvent('MouseEvent');
-					e.initMouseEvent(name, true, true, touch.view, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);
-					target.dispatchEvent(e);
-				}
-				
 				// Perform a touch end event
 				function touchEnd(e) {
 					if (!scrolling) {
@@ -288,8 +311,6 @@
 					}
 					
 					scrolling = false;
-					
-					var touches = getTouches(e);
 					
 					if (moved) {
 						// Ease back to within boundaries
@@ -300,15 +321,10 @@
 							momentumScroll(movedY, isiPad ? o.iPadMomentumDamp : o.momentumDamp, 40, 2000, isiPad ? o.iPadMomentumTime : o.momentumTime);
 						}			
 					} else {
-						// Dispatch a set of fake mouse events if this touch event did not move
-						var touch = touches[0],
-							target = touch.target;
+						var touch = getTouches(e)[0],
+							target = getRootNode(touch.target);
 						
-						while (target.nodeType !== 1) {
-							target = target.parentNode;
-						}
-						
-						dispatchMouseEvent('mousedown', touch, target);
+						// Dispatch fake mouse up and click events if this touch event did not move
 						dispatchMouseEvent('mouseup', touch, target);
 						dispatchMouseEvent('click', touch, target);
 					}
