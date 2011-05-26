@@ -244,8 +244,8 @@
 				
 				// Perform a touch start event
 				function touchStart(e) {
-					// Don't prevent SELECT elements from receiving touch events
-					if (e.target.tagName === 'SELECT') {
+					// Allow SELECT and INPUT elements to receive touch events
+					if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') {
 						return;
 					}
 					
