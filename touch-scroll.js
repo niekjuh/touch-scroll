@@ -48,7 +48,7 @@
 				// Keep bottom of scroll area at the bottom on resize
 				var update = this.update = function() {
 					height = $this.height();
-					scrollHeight = o.scrollHeight || $this.attr('scrollHeight') || $this.prop('scrollHeight'); // jQuery 1.6 uses .prop(), older versions use .attr()
+					scrollHeight = o.scrollHeight || ($this.prop ? $this.prop('scrollHeight') : $this.attr('scrollHeight')); // jQuery 1.6 uses .prop(), older versions use .attr()
 					if (scrollHeight < height) {
 						scrollHeight = height;
 					}
