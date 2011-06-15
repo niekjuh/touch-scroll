@@ -7,7 +7,7 @@ touchScroll is a jQuery plugin that provides a way to have inline scrollable con
 - This plugin will only work for vertical-scrolling content. It has been designed with only this in mind to keep the library lightweight and efficient.
 - The code is based on [iScroll](https://github.com/cubiq/iscroll), but is a simpler (and more accurate) plugin for jQuery.
 
-Another scroll library to consider is Scrollability: [http://joehewitt.github.com/scrollability/](http://joehewitt.github.com/scrollability/) which, although not a jQuery plugin, is a very accurate and capable solution to the same problem.
+Another scroll library to consider is [Scrollability](http://joehewitt.github.com/scrollability/), which, although not a jQuery plugin, is a very accurate and capable solution to the same problem.
 
 ## Example
 
